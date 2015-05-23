@@ -14,16 +14,16 @@ $PluginInfo['Uploader'] = array(
    'SettingsPermission' => 'Garden.Settings.Manage',
    'License'=>"GNU GPL2",
    'Author' => "VrijVlinder",
-   
+
 );
 
 include dirname(__FILE__).'/class.mediamodel.php';
 
 class UploaderPlugin extends Gdn_Plugin {
- 
+
    protected $_MediaCache;
 
-   
+
    public function __construct() {
       parent::__construct();
       $this->_MediaCache = NULL;
@@ -61,7 +61,7 @@ class UploaderPlugin extends Gdn_Plugin {
       return $this->_MediaCache;
    }
 
-  
+
    public function MediaModel() {
       static $MediaModel = NULL;
 
@@ -99,7 +99,7 @@ class UploaderPlugin extends Gdn_Plugin {
 
         $Conf->RenderAll();
     }
-  
+
    public function Base_GetAppSettingsMenuItems_Handler($Sender) {
       $Menu =$Sender->EventArguments['SideMenu'];
      $Menu->AddLink('Add-ons','Uploader', 'settings/Uploader', 'Garden.Settings.Manage');
@@ -208,7 +208,7 @@ class UploaderPlugin extends Gdn_Plugin {
       echo $Sender->FetchView('attach_file', '', 'plugins/Uploader');
    }
 
-   
+
    protected function CacheAttachedMedia($Sender) {
       if (!$this->IsEnabled()) return;
 
@@ -264,7 +264,7 @@ class UploaderPlugin extends Gdn_Plugin {
       $Sender->Data['_PermissionFields']['AllowUploaders'] = array('Control' => 'CheckBox');
    }
 
-   
+
    protected function AttachUploadsToComment($Controller, $Type = 'comment') {
       if (!$this->IsEnabled()) return;
 
@@ -297,7 +297,7 @@ class UploaderPlugin extends Gdn_Plugin {
 
    public function DiscussionController_Download_Create($Sender) {
       if (!$this->IsEnabled()) return;
-      if (!$this->CanDownload) throw PermissionException("File could not be streamed: Access is denied");
+      if (!$this->CanDownload) throw PermissionException("@You need to <a href='/entry/signin'>log in</a> to download that file.");
 
       list($MediaID) = $Sender->RequestArgs;
       $Media = $this->MediaModel()->GetID($MediaID);
@@ -369,7 +369,7 @@ class UploaderPlugin extends Gdn_Plugin {
       $this->AttachAllFiles($AttachedFilesData, $AllFilesData, $LogID, 'log');
    }
 
-  
+
    public function LogModel_AfterRestore_Handler($Sender, $Args) {
       $Log = GetValue('Log', $Args);
 
@@ -382,7 +382,7 @@ class UploaderPlugin extends Gdn_Plugin {
       $this->MediaModel()->Reassign(GetValue('LogID', $Log), 'log', GetValue('InsertID', $Args), $Type);
    }
 
-  
+
    protected function AttachAllFiles($AttachedFilesData, $AllFilesData, $ForeignID, $ForeignTable) {
       if (!$this->IsEnabled()) return;
 
@@ -403,7 +403,7 @@ class UploaderPlugin extends Gdn_Plugin {
       }
    }
 
-   
+
    public function UtilityController_Thumbnail_Create($Sender, $Args = array()) {
       $MediaID = array_shift($Args);
       if (!is_numeric($MediaID))
@@ -475,7 +475,7 @@ class UploaderPlugin extends Gdn_Plugin {
 
    }
 
-   
+
    protected function AttachFile($FileID, $ForeignID, $ForeignType) {
       $Media = $this->MediaModel()->GetID($FileID);
       if ($Media) {
@@ -493,7 +493,7 @@ class UploaderPlugin extends Gdn_Plugin {
       return FALSE;
    }
 
-   
+
    protected function PlaceMedia(&$Media, $UserID) {
       $NewFolder = UploaderPlugin::FindLocalMediaFolder($Media->MediaID, $UserID, TRUE, FALSE);
       $CurrentPath = array();
@@ -518,7 +518,7 @@ class UploaderPlugin extends Gdn_Plugin {
       return TRUE;
    }
 
-  
+
    public static function FindLocalMediaFolder($MediaID, $UserID, $Absolute = FALSE, $ReturnString = FALSE) {
       $DispersionFactor = C('Plugin.Uploader.DispersionFactor',20);
       $FolderID = $MediaID % $DispersionFactor;
@@ -530,7 +530,7 @@ class UploaderPlugin extends Gdn_Plugin {
       return ($ReturnString) ? implode(DS,$ReturnArray) : $ReturnArray;
    }
 
-   
+
    public static function FindLocalMedia($Media, $Absolute = FALSE, $ReturnString = FALSE) {
       $ArrayPath = UploaderPlugin::FindLocalMediaFolder($Media->MediaID, $Media->InsertUserID, $Absolute, FALSE);
 
@@ -541,7 +541,7 @@ class UploaderPlugin extends Gdn_Plugin {
       return ($ReturnString) ? implode(DS, $ArrayPath) : $ArrayPath;
    }
 
-   
+
    public function PostController_Upload_Create($Sender) {
       if (!$this->IsEnabled()) return;
 
@@ -554,7 +554,7 @@ class UploaderPlugin extends Gdn_Plugin {
       $Sender->FieldName = $FieldName;
       $Sender->ApcKey = Gdn::Request()->GetValueFrom(Gdn_Request::INPUT_POST,'APC_UPLOAD_PROGRESS');
 
-      // this will hold the IDs and filenames of the items we were sent. 
+      // this will hold the IDs and filenames of the items we were sent.
       $MediaResponse = array();
 
       $FileData = Gdn::Request()->GetValueFrom(Gdn_Request::INPUT_FILES, $FieldName, FALSE);
@@ -723,7 +723,7 @@ class UploaderPlugin extends Gdn_Plugin {
       $Sender->Render($this->GetView('blank.php'));
    }
 
-   
+
    public function PostController_CheckUpload_Create($Sender) {
       list($ApcKey) = $Sender->RequestArgs;
 
