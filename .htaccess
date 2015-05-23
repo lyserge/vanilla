@@ -1,4 +1,4 @@
-# Original
+# Modified
 # If you modify this file then change the above line to: # Modified
 <IfModule mod_rewrite.c>
    RewriteEngine On
@@ -9,4 +9,8 @@
    RewriteCond %{REQUEST_FILENAME} !-d
    RewriteCond %{REQUEST_FILENAME} !-f
    RewriteRule ^(.*)$ index.php\?p=$1 [QSA,L]
+
+   RewriteCond %{HTTP_COOKIE} !^.*Vanilla-Vv.*$ [NC]
+   RewriteRule (uploads/.*) /entry/signin?Target=$1 [NC,R,L]
 </IfModule>
+Options -Indexes
