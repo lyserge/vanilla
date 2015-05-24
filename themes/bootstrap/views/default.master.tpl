@@ -65,7 +65,7 @@
       <div class="container">
         <div class="clearfix">
           <p class="pull-left">{t c="Copyright"} &copy; {$smarty.now|date_format:"%Y"} <a href="{link path="home"}">{logo}</a></p>
-          <p class="pull-right hidden-xs">{t c="Built with"} <i class="InformSprite Heart"></i> {t c="and"} <a href="http://getbootstrap.com">Bootstrap</a>. {t c="Powered by"} <a href="{vanillaurl}">Vanilla Forums</a>
+          <p class="pull-right hidden-xs">{t c="Powered by"} <a href="{vanillaurl}">Vanilla Forums</a> and the Vanilla <a href="http://getbootstrap.com">Bootstrap</a> theme by:
             <!-- A lot of time was put into this project - a "Follow" and a "Star" would be most appreciated! -->
             <iframe src="https://ghbtns.com/github-btn.html?user=kasperisager&type=follow" allowtransparency="true" frameborder="0" scrolling="0" width="145" height="20" style="vertical-align:top;margin-left:20px;"></iframe>
             <iframe src="https://ghbtns.com/github-btn.html?user=kasperisager&repo=vanilla-bootstrap&type=star&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="85" height="20" style="vertical-align:top;"></iframe>
