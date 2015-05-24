@@ -1,0 +1,18 @@
+.EasyMembersListTable {
+    width: 100%;
+}
+.EasyMembersListTable .Alt{
+    background-color: #FAF8F8;
+}
+.EasyMembersListTable th{
+    background-color: #EEECEC;
+    text-align: left;
+    padding-left: 10px;
+    color: darkgray;
+}
+.EasyMembersListTable .UserName{
+    padding-left: 10px;
+}
+.EasyMembersListTable .UserRoles{}
+.EasyMembersListTable .UserFirstVisit{}
+.EasyMembersListTable .UserLastVisit{}
